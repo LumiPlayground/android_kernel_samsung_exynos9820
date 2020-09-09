@@ -17,6 +17,8 @@ enum acpm_dvfs_id {
 	dvfs_mfc,
 };
 
+_Pragma("GCC diagnostic push")
+_Pragma("GCC diagnostic ignored \"-Wsizeof-pointer-div\"")
 struct vclk acpm_vclk_list[] = {
 	CMUCAL_ACPM_VCLK2(dvfs_mif, NULL, NULL, NULL, NULL, MARGIN_MIF),
 	CMUCAL_ACPM_VCLK2(dvfs_int, NULL, NULL, NULL, NULL, MARGIN_INT),
@@ -34,5 +36,6 @@ struct vclk acpm_vclk_list[] = {
 	CMUCAL_ACPM_VCLK2(dvfs_iva, NULL, NULL, NULL, NULL, MARGIN_IVA),
 	CMUCAL_ACPM_VCLK2(dvfs_mfc, NULL, NULL, NULL, NULL, MARGIN_MFC),
 };
+_Pragma("GCC diagnostic pop")
 
 unsigned int acpm_vclk_size = ARRAY_SIZE(acpm_vclk_list);

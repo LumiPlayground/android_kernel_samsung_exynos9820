@@ -827,7 +827,8 @@ enum clk_id cmucal_mux_clkcmu_vpu_bus_user_parents[] = {
 /*====================The section of MUXs===================*/
 unsigned int cmucal_mux_size = 220;
 
-
+_Pragma("GCC diagnostic push")
+_Pragma("GCC diagnostic ignored \"-Wsizeof-pointer-div\"")
 struct cmucal_mux cmucal_mux_list[] = {
 	CLK_MUX(MUX_CLK_ABOX_UAIF3, cmucal_mux_clk_abox_uaif3_parents, CLK_CON_MUX_MUX_CLK_ABOX_UAIF3_SELECT, CLK_CON_MUX_MUX_CLK_ABOX_UAIF3_BUSY, CLK_CON_MUX_MUX_CLK_ABOX_UAIF3_ENABLE_AUTOMATIC_CLKGATING),
 	CLK_MUX(MUX_CLK_ABOX_UAIF2, cmucal_mux_clk_abox_uaif2_parents, CLK_CON_MUX_MUX_CLK_ABOX_UAIF2_SELECT, CLK_CON_MUX_MUX_CLK_ABOX_UAIF2_BUSY, CLK_CON_MUX_MUX_CLK_ABOX_UAIF2_ENABLE_AUTOMATIC_CLKGATING),
@@ -1050,6 +1051,7 @@ struct cmucal_mux cmucal_mux_list[] = {
 	CLK_MUX(MUX_CLKCMU_SRDZ_BUS_USER, cmucal_mux_clkcmu_srdz_bus_user_parents, PLL_CON0_MUX_CLKCMU_SRDZ_BUS_USER_MUX_SEL, PLL_CON0_MUX_CLKCMU_SRDZ_BUS_USER_BUSY, PLL_CON2_MUX_CLKCMU_SRDZ_BUS_USER_ENABLE_AUTOMATIC_CLKGATING),
 	CLK_MUX(MUX_CLKCMU_VPU_BUS_USER, cmucal_mux_clkcmu_vpu_bus_user_parents, PLL_CON0_MUX_CLKCMU_VPU_BUS_USER_MUX_SEL, PLL_CON0_MUX_CLKCMU_VPU_BUS_USER_BUSY, PLL_CON2_MUX_CLKCMU_VPU_BUS_USER_ENABLE_AUTOMATIC_CLKGATING),
 };
+_Pragma("GCC diagnostic pop")
 
 /*====================The section of DIVs===================*/
 unsigned int cmucal_div_size = 122;
