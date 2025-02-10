@@ -116,6 +116,11 @@ dtbo-$(CONFIG_MODEL_D2XKS) += samsung/exynos9825-d2x_kor_19.dtbo
 dtbo-$(CONFIG_MODEL_D2XKS) += samsung/exynos9825-d2x_kor_22.dtbo
 dtbo-$(CONFIG_MODEL_D2XKS) += samsung/exynos9825-d2x_kor_17.dtbo
 
+dtb-$(CONFIG_SOC_EXYNOS8895) += \
+	exynos/exynos8895-dream2lte_eur_open_10.dtb \
+	exynos/exynos8895-dreamlte_eur_open_10.dtb \
+	exynos/exynos8895-greatlte_eur_open_06.dtb
+
 targets += dtbs
 DTB_LIST  := $(dtb-y) $(dtbo-y)
 always    := $(DTB_LIST)
