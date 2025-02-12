@@ -786,6 +786,7 @@ out:
 	return ret;
 }
 #else
+#define exynos98X0_tmu_set_emulation NULL
 static int exynos_tmu_set_emulation(void *drv_data, int temp)
 	{ return -EINVAL; }
 #endif /* CONFIG_THERMAL_EMULATION */
