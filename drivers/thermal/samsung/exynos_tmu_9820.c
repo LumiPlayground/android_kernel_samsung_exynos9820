@@ -65,66 +65,32 @@
 
 #include "linux/mcu_ipc.h"
 
-/* Exynos generic registers */
-#define EXYNOS_TMU_REG_TRIMINFO7_0(p)	(((p) - 0) * 4)
-#define EXYNOS_TMU_REG_TRIMINFO15_8(p)	(((p) - 8) * 4 + 0x400)
-#define EXYNOS_TMU_REG_TRIMINFO(p)	(((p) <= 7) ? \
-						EXYNOS_TMU_REG_TRIMINFO7_0(p) : \
-						EXYNOS_TMU_REG_TRIMINFO15_8(p))
-#define EXYNOS_TMU_REG_CONTROL		0x20
-#define EXYNOS_TMU_REG_CONTROL1		0x24
-#define EXYNOS_TMU_REG_STATUS		0x28
-#define EXYNOS_TMU_REG_CURRENT_TEMP1_0	0x40
-#define EXYNOS_TMU_REG_CURRENT_TEMP4_2  0x44
-#define EXYNOS_TMU_REG_CURRENT_TEMP7_5  0x48
-#define EXYNOS_TMU_REG_CURRENT_TEMP9_8		0x440
-#define EXYNOS_TMU_REG_CURRENT_TEMP12_10	0x444
-#define EXYNOS_TMU_REG_CURRENT_TEMP15_13	0x448
-#define EXYNOS_TMU_REG_INTEN0		0x110
-#define EXYNOS_TMU_REG_INTEN5		0x310
-#define EXYNOS_TMU_REG_INTEN8		0x650
-#define EXYNOS_TMU_REG_INTSTAT		0x74
-#define EXYNOS_TMU_REG_INTCLEAR		0x78
+/* Exynos9820 registers */
+#define EXYNOS_TMU_REG_TRIMINFO(p)		(((p) - 0) * 4)
+#define EXYNOS_TMU_REG_CONTROL			(0x50)
+#define EXYNOS_TMU_REG_CONTROL1			(0x54)
+#define EXYNOS_TMU_REG_STATUS			(0x80)
+#define EXYNOS_TMU_REG_CURRENT_TEMP1_0		(0x84)
 
-#define EXYNOS_TMU_REG_THD_TEMP0		0x50
-#define EXYNOS_TMU_REG_THD_TEMP1		0x170
-#define EXYNOS_TMU_REG_THD_TEMP8		0x450
+#define EXYNOS_TMU_REG_THD_TEMP0		(0xD0)
+#define EXYNOS_TMU_REG_INTEN0			(0xF0)
+#define EXYNOS_TMU_REG_INTPEND0			(0xF8)
+#define EXYNOS_TMU_REG_SENSOR_OFFSET		(0x50)
 
-#define EXYNOS_THD_TEMP_RISE7_6			0x50
-#define EXYNOS_THD_TEMP_FALL7_6			0x60
-#define EXYNOS_THD_TEMP_R_OFFSET		0x100
+#define EXYNOS_TMU_REG_THD(p)			(EXYNOS_TMU_REG_THD_TEMP0 + p * EXYNOS_TMU_REG_SENSOR_OFFSET)
+#define EXYNOS_TMU_REG_INTPEND(p)		(EXYNOS_TMU_REG_INTPEND0 + p * EXYNOS_TMU_REG_SENSOR_OFFSET)
+#define EXYNOS_TMU_REG_INTEN(p)			(EXYNOS_TMU_REG_INTEN0 + p * EXYNOS_TMU_REG_SENSOR_OFFSET)
 
-#define EXYNOS_TMU_REG_TRIM0			(0x3C)
+#define EXYNOS_TMU_REG_TRIM0			(0x5C)
+#define EXYNOS_TMU_REG_EMUL_CON			(0xB0)
 
-#define EXYNOS_TMU_REG_INTPEND0			(0x118)
-#define EXYNOS_TMU_REG_INTPEND5			(0x318)
-#define EXYNOS_TMU_REG_INTPEND8			(0x658)
+#define EXYNOS_TMU_REG_AVG_CON			(0x58)
+#define EXYNOS_TMU_REG_COUNTER_VALUE0		(0x74)
+#define EXYNOS_TMU_REG_COUNTER_VALUE1		(0x78)
 
-#define EXYNOS_TMU_REG_THD(p)			((p == 0) ?					\
-						EXYNOS_TMU_REG_THD_TEMP0 :			\
-						((p < 8) ?					\
-						(EXYNOS_TMU_REG_THD_TEMP1 + (p - 1) * 0x20) :	\
-						(EXYNOS_TMU_REG_THD_TEMP8 + (p - 8) * 0x20)))
-#define EXYNOS_TMU_REG_INTEN(p)			((p < 5) ?					\
-						(EXYNOS_TMU_REG_INTEN0 + p * 0x10) :		\
-						((p < 8) ?					\
-						(EXYNOS_TMU_REG_INTEN5 + (p - 5) * 0x10) :	\
-						(EXYNOS_TMU_REG_INTEN8 + (p - 8) * 0x10)))
-#define EXYNOS_TMU_REG_INTPEND(p)		((p < 5) ?					\
-						(EXYNOS_TMU_REG_INTPEND0 + p * 0x10) :		\
-						((p < 8) ?					\
-						(EXYNOS_TMU_REG_INTPEND5 + (p - 5) * 0x10) :	\
-						(EXYNOS_TMU_REG_INTPEND8 + (p - 8) * 0x10)))
+#define EXYNOS_TMU_TEMP_SHIFT			(16)
 
-#define EXYNOS_TMU_REG_EMUL_CON			(0x160)
-
-#define EXYNOS_TMU_REG_AVG_CON			(0x38)
-#define EXYNOS_TMU_REG_COUNTER_VALUE0		(0x30)
-#define EXYNOS_TMU_REG_COUNTER_VALUE1		(0x34)
-
-#define EXYNOS_TMU_TEMP_SHIFT			(9)
-
-#define EXYNOS_GPU_THERMAL_ZONE_ID		(2)
+#define EXYNOS_GPU_THERMAL_ZONE_ID		(3)
 
 #define EXYNOS_TMU_REF_VOLTAGE_SHIFT	24
 #define EXYNOS_TMU_REF_VOLTAGE_MASK	0x1f
@@ -210,8 +176,8 @@
 #define DEFAULT_BALANCE_OFFSET	20
 
 #ifdef CONFIG_EXYNOS_ACPM_THERMAL
-#define PMUREG_AUD_STATUS			0x4004
-#define PMUREG_AUD_STATUS_MASK			0xF
+#define PMUREG_AUD_STATUS			0x1904
+#define PMUREG_AUD_STATUS_MASK			0x1
 static struct acpm_tmu_cap cap;
 static unsigned int num_of_devices, suspended_count;
 static bool cp_call_mode;
@@ -790,9 +756,6 @@ static int exynos_tmu_set_emulation(void *drv_data, int temp)
 	{ return -EINVAL; }
 #endif /* CONFIG_THERMAL_EMULATION */
 
-static bool cpufreq_limited;
-static struct pm_qos_request thermal_cpu_limit_request;
-
 static int exynos98X0_tmu_read(struct exynos_tmu_data *data)
 {
 	int temp = 0, stat = 0;
@@ -800,18 +763,6 @@ static int exynos98X0_tmu_read(struct exynos_tmu_data *data)
 #ifdef CONFIG_EXYNOS_ACPM_THERMAL
 	exynos_acpm_tmu_set_read_temp(data->tzd->id, &temp, &stat);
 #endif
-
-	if (data->hotplug_enable) {
-		if ((stat == 2) && !cpufreq_limited) {
-			pm_qos_update_request(&thermal_cpu_limit_request,
-					data->limited_frequency);
-			cpufreq_limited = true;
-		} else if ((stat == 0 || stat == 1) && cpufreq_limited) {
-			pm_qos_update_request(&thermal_cpu_limit_request,
-					PM_QOS_CLUSTER1_FREQ_MAX_DEFAULT_VALUE);
-			cpufreq_limited = false;
-		}
-	}
 
 	return temp;
 }
@@ -928,15 +879,15 @@ static int exynos_tmu_boost_callback(unsigned int cpu)
 }
 
 static const struct of_device_id exynos_tmu_match[] = {
-	{ .compatible = "samsung,exynos9810-tmu", },
+	{ .compatible = "samsung,exynos9820-tmu", },
 	{ /* sentinel */ },
 };
 MODULE_DEVICE_TABLE(of, exynos_tmu_match);
 
 static int exynos_of_get_soc_type(struct device_node *np)
 {
-	if (of_device_is_compatible(np, "samsung,exynos9810-tmu"))
-		return SOC_ARCH_EXYNOS9810;
+	if (of_device_is_compatible(np, "samsung,exynos9820-tmu"))
+		return SOC_ARCH_EXYNOS9820;
 
 	return -EINVAL;
 }
@@ -1061,7 +1012,7 @@ static int exynos_map_dt_data(struct platform_device *pdev)
 	data->soc = exynos_of_get_soc_type(pdev->dev.of_node);
 
 	switch (data->soc) {
-	case SOC_ARCH_EXYNOS9810:
+	case SOC_ARCH_EXYNOS9820:
 		data->tmu_initialize = exynos98X0_tmu_initialize;
 		data->tmu_control = exynos98X0_tmu_control;
 		data->tmu_read = exynos98X0_tmu_read;
@@ -1164,13 +1115,8 @@ all_temp_show(struct device *dev, struct device_attribute *devattr,
 	u32 temp_code, temp_cel;
 
 	for (i = 0; i < data->num_of_sensors; i++) {
-		if (data->sensor_info[i].sensor_num < 2) {
-			reg_offset = 0;
-			bit_offset = EXYNOS_TMU_TEMP_SHIFT * data->sensor_info[i].sensor_num;
-		} else {
-			reg_offset = ((data->sensor_info[i].sensor_num - 2) / 3 + 1) * 4;
-			bit_offset = EXYNOS_TMU_TEMP_SHIFT * ((data->sensor_info[i].sensor_num - 2) % 3);
-		}
+		reg_offset = (data->sensor_info[i].sensor_num / 2) * 4;
+		bit_offset = (data->sensor_info[i].sensor_num % 2) * EXYNOS_TMU_TEMP_SHIFT;
 		temp_code = (readl(data->base + EXYNOS_TMU_REG_CURRENT_TEMP1_0 + reg_offset)
 				>> bit_offset) & EXYNOS_TMU_TEMP_MASK;
 		temp_cel = code_to_temp_with_sensorinfo(data, temp_code, &data->sensor_info[i]);
@@ -1477,9 +1423,6 @@ static int exynos_tmu_probe(struct platform_device *pdev)
 	 */
 	if(data->hotplug_enable) {
 		exynos_cpuhp_register("DTM", *cpu_online_mask, 0);
-		pm_qos_add_request(&thermal_cpu_limit_request,
-					PM_QOS_CLUSTER1_FREQ_MAX,
-					PM_QOS_CLUSTER1_FREQ_MAX_DEFAULT_VALUE);
 	}
 
 	data->tzd = thermal_zone_of_sensor_register(&pdev->dev, 0, data,
