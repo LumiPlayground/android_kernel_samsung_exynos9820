@@ -39,6 +39,8 @@
 #endif
 #if defined(CONFIG_DUAL_ROLE_USB_INTF)
 #include <linux/usb/class-dual-role.h>
+#elif defined(CONFIG_TYPEC)
+#include <linux/usb/typec.h>
 #endif
 
 #define REG_I2C_SLV_CMD		0x10
@@ -847,8 +849,17 @@ struct s2mm005_data {
 	int power_role;
 	int try_state_change;
 	struct delayed_work role_swap_work;
+#elif defined(CONFIG_TYPEC)
+	struct typec_port *port;
+	struct typec_partner *partner;
+	struct usb_pd_identity partner_identity;
+	struct typec_capability typec_cap;
+	struct completion role_reverse_completion;
+	int typec_power_role;
+	int typec_data_role;
+	int typec_try_state_change;
+	struct delayed_work typec_role_swap_work;
 #endif
-
 	int s2mm005_fw_product_id;
 	u8 fw_product_id;
 
