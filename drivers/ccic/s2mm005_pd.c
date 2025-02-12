@@ -209,19 +209,21 @@ void process_pd(void *data, u8 plug_attach_done, u8 *pdic_attach, MSG_IRQ_STATUS
 	{
 		usbpd_data->is_pr_swap++;
 		dev_info(&i2c->dev, "PR_Swap requested to %s\n", is_src ? "SOURCE" : "SINK");
+#if defined(CONFIG_DUAL_ROLE_USB_INTF)
 		if (is_src && (usbpd_data->power_role == DUAL_ROLE_PROP_PR_SNK)) {
 			ccic_event_work(usbpd_data, CCIC_NOTIFY_DEV_BATTERY, CCIC_NOTIFY_ID_ATTACH, 0, 0, 0);
 		}
+#endif
 		vbus_turn_on_ctrl(is_src);
 #if defined(CONFIG_DUAL_ROLE_USB_INTF)
 		usbpd_data->power_role = is_src ? DUAL_ROLE_PROP_PR_SRC : DUAL_ROLE_PROP_PR_SNK;
-#if defined(CONFIG_USB_HOST_NOTIFY)
-		if( usbpd_data->power_role == DUAL_ROLE_PROP_PR_SRC)
-			send_otg_notify(o_notify, NOTIFY_EVENT_POWER_SOURCE, 1);
-		else if( usbpd_data->power_role == DUAL_ROLE_PROP_PR_SNK)
-			send_otg_notify(o_notify, NOTIFY_EVENT_POWER_SOURCE, 0);
-#endif
 		ccic_event_work(usbpd_data, CCIC_NOTIFY_DEV_PDIC, CCIC_NOTIFY_ID_ROLE_SWAP, 0, 0, 0);
+#endif
+#if defined(CONFIG_USB_HOST_NOTIFY)
+		if (is_src)
+			send_otg_notify(o_notify, NOTIFY_EVENT_POWER_SOURCE, 1);
+		else
+			send_otg_notify(o_notify, NOTIFY_EVENT_POWER_SOURCE, 0);
 #endif
 	}
 

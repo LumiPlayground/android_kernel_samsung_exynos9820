@@ -1434,10 +1434,10 @@ static int s2mm005_usbpd_probe(struct i2c_client *i2c,
 	usbpd_data->desc = desc;
 	init_completion(&usbpd_data->reverse_completion);
 	usbpd_data->power_role = DUAL_ROLE_PROP_PR_NONE;
+	INIT_DELAYED_WORK(&usbpd_data->role_swap_work, role_swap_check);
+#endif
 #if defined(CONFIG_USB_HOST_NOTIFY)
 	send_otg_notify(o_notify, NOTIFY_EVENT_POWER_SOURCE, 0);
-#endif
-	INIT_DELAYED_WORK(&usbpd_data->role_swap_work, role_swap_check);
 #endif
 #if defined(CONFIG_CCIC_ALTERNATE_MODE)
 	usbpd_data->alternate_state = 0;
