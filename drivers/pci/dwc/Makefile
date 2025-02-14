@@ -7,6 +7,7 @@ ifneq ($(filter y,$(CONFIG_PCI_DRA7XX_HOST) $(CONFIG_PCI_DRA7XX_EP)),)
         obj-$(CONFIG_PCI_DRA7XX) += pci-dra7xx.o
 endif
 obj-$(CONFIG_PCI_EXYNOS) += pcie-exynos-host-v0.o pcie-exynos-host-v1.o
+obj-$(CONFIG_SOC_EXYNOS8895) += pci-exynos8895_cal.o pci-host-v1-exynos9820_cal.o
 obj-$(CONFIG_SOC_EXYNOS9820) += pci-exynos9820_cal.o pci-host-v1-exynos9820_cal.o
 obj-$(CONFIG_PCI_IMX6) += pci-imx6.o
 obj-$(CONFIG_PCIE_SPEAR13XX) += pcie-spear13xx.o
