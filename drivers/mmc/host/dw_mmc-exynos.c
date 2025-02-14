@@ -27,8 +27,10 @@
 #include "dw_mmc-pltfm.h"
 #include "dw_mmc-exynos.h"
 
+#if 0
 extern int cal_pll_mmc_set_ssc(unsigned int mfr, unsigned int mrr, unsigned int ssc_on);
 extern int cal_pll_mmc_check(void);
+#endif
 
 static void dw_mci_exynos_register_dump(struct dw_mci *host)
 {
@@ -216,6 +218,7 @@ static int dw_mci_exynos_priv_init(struct dw_mci *host)
 	return 0;
 }
 
+#if 0
 static void dw_mci_exynos_ssclk_control(struct dw_mci *host, int enable)
 {
 	u32 err;
@@ -250,6 +253,7 @@ static void dw_mci_exynos_ssclk_control(struct dw_mci *host, int enable)
 out:
 	return;
 }
+#endif
 
 static void dw_mci_exynos_set_clksel_timing(struct dw_mci *host, u32 timing)
 {
@@ -458,12 +462,14 @@ static void dw_mci_exynos_set_ios(struct dw_mci *host, struct mmc_ios *ios)
 
 	}
 
+#if 0
 	if (host->pdata->quirks & DW_MCI_QUIRK_USE_SSC) {
 		if ((ios->clock > 0) && (ios->clock < 100 * MHZ))
 			dw_mci_exynos_ssclk_control(host, 0);
 		else if (ios->clock)
 			dw_mci_exynos_ssclk_control(host, 1);
 	}
+#endif
 
 	if ((ios->clock > 0) && (ios->clock <= 400 * KHZ))
 		sample_path_sel_dis(host, AXI_BURST_LEN);
@@ -1658,7 +1664,9 @@ static const struct dw_mci_drv_data exynos_drv_data = {
 	.access_control_abort = dw_mci_exynos_access_control_abort,
 	.access_control_resume = dw_mci_exynos_access_control_resume,
 #endif
+#if 0
 	.ssclk_control = dw_mci_exynos_ssclk_control,
+#endif
 };
 
 static const struct of_device_id dw_mci_exynos_match[] = {
