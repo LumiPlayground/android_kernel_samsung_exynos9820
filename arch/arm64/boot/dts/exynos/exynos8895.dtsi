@@ -583,6 +583,15 @@
 		reg = <0x0 0x11420000 0x1200>;
 	};
 
+	exynos_flexpmu_dbg {
+		compatible = "samsung,exynos-flexpmu-dbg";
+		#address-cells = <2>;
+		#size-cells = <1>;
+		data-base = <0x204bc00>;
+		data-size = <0x400>;
+		reg = <0x0 0x15950000 0x1000>;
+	};
+
 	mct@10040000 {
 		compatible = "samsung,exynos4210-mct";
 		reg = <0x0 0x10040000 0x800>;
