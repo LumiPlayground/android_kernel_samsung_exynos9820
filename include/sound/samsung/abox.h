@@ -256,7 +256,7 @@ static inline void abox_request_dram_on(struct device *dev, unsigned int id, boo
 }
 
 static inline int abox_iommu_map(struct device *dev, unsigned long iova,
-		phys_addr_t addr, size_t bytes, void *addr)
+		phys_addr_t addr, size_t bytes, void *area)
 {
 	return -ENODEV;
 }
