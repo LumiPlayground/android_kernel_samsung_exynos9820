@@ -164,23 +164,6 @@
 			cluster0 {
 				coregroup0 {
 					core0 {
-						cpu = <&cpu0>;
-					};
-					core1 {
-						cpu = <&cpu1>;
-					};
-					core2 {
-						cpu = <&cpu2>;
-					};
-					core3 {
-						cpu = <&cpu3>;
-					};
-				};
-			};
-
-			cluster1 {
-				coregroup0 {
-					core0 {
 						cpu = <&cpu4>;
 					};
 					core1 {
@@ -191,6 +174,23 @@
 					};
 					core3 {
 						cpu = <&cpu7>;
+					};
+				};
+			};
+
+			cluster1 {
+				coregroup0 {
+					core0 {
+						cpu = <&cpu0>;
+					};
+					core1 {
+						cpu = <&cpu1>;
+					};
+					core2 {
+						cpu = <&cpu2>;
+					};
+					core3 {
+						cpu = <&cpu3>;
 					};
 				};
 			};
