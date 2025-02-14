@@ -18,6 +18,7 @@
 #include <dt-bindings/soc/samsung/exynos8895.h>
 #include <dt-bindings/sysmmu/sysmmu.h>
 #include <dt-bindings/thermal/thermal.h>
+#include <dt-bindings/pci/pci.h>
 #include "exynos8895-pinctrl.dtsi"
 #include "exynos8895-pm-domains.dtsi"
 #include "exynos8895-ess.dtsi"
@@ -3641,11 +3642,14 @@
 		use-cache-coherency = "true";
 		use-msi = "false";
 		use-sicd = "true";
+		use-sysmmu = "false";
+		use-ia = "false";
+		max-link-speed = <LINK_SPEED_GEN2>;
 		status = "disabled";
 	};
 
 	pcie1@116B0000 {
-		compatible = "samsung,exynos8895-pcie";
+		compatible = "samsung,exynos-pcie-host-v1";
 		gpios = <&gpj1 6 0x1 /* PERST */>;
 		reg = <0x0 0x116B0000 0x1000    /* elbi base */
 			0x0 0x116D0000 0x1000   /* phy base */
@@ -3679,6 +3683,9 @@
 		use-cache-coherency = "true";
 		use-msi = "false";
 		use-sicd = "true";
+		use-sysmmu = "false";
+		use-ia = "false";
+		max-link-speed = <LINK_SPEED_GEN2>;
 		status = "disabled";
 	};
 
